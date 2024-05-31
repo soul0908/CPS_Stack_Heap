@@ -51,16 +51,5 @@ int main() {
 	add(&Stack, 20);
 	add(&Stack, 30);
 	
-	printf("Peek: %d\n", peek(&Stack)); // Peek operation
-	
-	make_remove(&Stack);
-	make_remove(&Stack);
-	
-	if (isEmpty(&Stack)) {
-		printf("스택이 비어있습니다.\n");
-	} else {
-		printf("스택에 요소가 남아있습니다.\n");
-	}
-	
 	return 0;
 }
