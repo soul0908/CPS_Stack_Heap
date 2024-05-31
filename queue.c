@@ -3,43 +3,64 @@
 typedef int element;
 
 typedef struct {
-	element list[100]; // ¹è¿­ »ı¼º
-	int pointer; // Ãß°¡ÇÒ¶§ ¸¶´Ù °¡¸£Å°´Â Æ÷ÀÎÅÍ
-	int tail_pointer; // ¸¶Áö¸·´ÜÀ» °¡¸£Å°´Â Æ÷ÀÎÅÍ
+	element list[100]; // ë°°ì—´ ìƒì„±
+	int pointer; // ì¶”ê°€í• ë•Œ ë§ˆë‹¤ ê°€ë¥´í‚¤ëŠ” í¬ì¸í„°
+	int tail_pointer; // ë§ˆì§€ë§‰ë‹¨ì„ ê°€ë¥´í‚¤ëŠ” í¬ì¸í„°
 } ArrayListType;
 
-// ¸®½ºÆ®¸¦ ÃÊ±âÈ­ ÇÏ´Â ÇÔ¼ö Áï ¸¶Áö¸· ÁöÁ¡À» °¡¸®Å´.
+// ë¦¬ìŠ¤íŠ¸ë¥¼ ì´ˆê¸°í™” í•˜ëŠ” í•¨ìˆ˜ ì¦‰ ë§ˆì§€ë§‰ ì§€ì ì„ ê°€ë¦¬í‚´.
 void init(ArrayListType* L)
 {
-	L->pointer = 0; // ±âº»Àº listÀÇ 0¹øÂ° ÀÎµ¦½º¿¡¼­ ½ÃÀÛÇÔ.
-	L->tail_pointer = 0; // ¼¼¹ÌÄİ·Ğ ´©¶ô ¼öÁ¤
+	L->pointer = 0; // ê¸°ë³¸ì€ listì˜ 0ë²ˆì§¸ ì¸ë±ìŠ¤ì—ì„œ ì‹œì‘í•¨.
+	L->tail_pointer = 0;
 }
-
 
 void add(ArrayListType* L, element item) {
 	L->list[L->pointer] = item;
-	printf("listÀÇ %d¹øÂ°¿¡ Push : %d\n", L->pointer, item);
+	printf("listì˜ %dë²ˆì§¸ì— Push : %d\n", L->pointer, item);
 	L->pointer++;
 }
 
 int make_remove(ArrayListType* L) {
-	if (L->pointer = 0) { // ½ºÅÃ ¾È¿¡ ¾Æ¹«°Íµµ ¾ø´Â »óÅÂ
-		printf("½ºÅÃÀÌ ºñ¾îÀÖ½À´Ï´Ù.\n");
-		return -1; // ¿¡·¯ °ª ¹İÈ¯
+	if (L->pointer == 0) { // ìŠ¤íƒ ì•ˆì— ì•„ë¬´ê²ƒë„ ì—†ëŠ” ìƒíƒœ
+		printf("ìŠ¤íƒì´ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.\n");
+		return -1; // ì—ëŸ¬ ê°’ ë°˜í™˜
 	}
-	int ret_item = L->list[L->tail_pointer]; // ÀüÁøÇÑ °ª Ã£¾Æ¿À±â
-	printf("listÀÇ %d¹øÂ°¿¡ Pop : %d\n", L->tail_pointer, ret_item); // Ãâ·Â ¸Ş½ÃÁö ¼öÁ¤
-	L->tail_pointer++; // Æ÷ÀÎÅÍ ¾ÕÀ¸·Î ÀüÁø
+	int ret_item = L->list[L->tail_pointer]; // ì „ì§„í•œ ê°’ ì°¾ì•„ì˜¤ê¸°
+	printf("listì˜ %dë²ˆì§¸ì— Pop : %d\n", L->tail_pointer, ret_item); // ì¶œë ¥ ë©”ì‹œì§€ ìˆ˜ì •
+	L->tail_pointer++; // í¬ì¸í„° ì•ìœ¼ë¡œ ì „ì§„
 	return ret_item;
 }
 
+element peek(ArrayListType* L) {
+	if (L->pointer == 0) {
+		printf("ìŠ¤íƒì´ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.\n");
+		return -1; // ì—ëŸ¬ ê°’ ë°˜í™˜
+	}
+	return L->list[L->tail_pointer];
+}
+
+int isEmpty(ArrayListType* L) {
+	return L->pointer == L->tail_pointer;
+}
+
 int main() {
-	ArrayListType Stack; // Æ÷ÀÎÅÍ°¡ ¾Æ´Ñ ½ÇÁ¦ º¯¼ö·Î ¼±¾ğ
-	init(&Stack); // Æ÷ÀÎÅÍ°¡ ¾Æ´Ñ º¯¼öÀÇ ÁÖ¼Ò¸¦ Àü´Ş
+	ArrayListType Stack; // í¬ì¸í„°ê°€ ì•„ë‹Œ ì‹¤ì œ ë³€ìˆ˜ë¡œ ì„ ì–¸
+	init(&Stack); // í¬ì¸í„°ê°€ ì•„ë‹Œ ë³€ìˆ˜ì˜ ì£¼ì†Œë¥¼ ì „ë‹¬
 	add(&Stack, 10);
 	add(&Stack, 20);
 	add(&Stack, 30);
+	
+	printf("Peek: %d\n", peek(&Stack)); // Peek operation
+	
 	make_remove(&Stack);
 	make_remove(&Stack);
+	
+	if (isEmpty(&Stack)) {
+		printf("ìŠ¤íƒì´ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.\n");
+	} else {
+		printf("ìŠ¤íƒì— ìš”ì†Œê°€ ë‚¨ì•„ìˆìŠµë‹ˆë‹¤.\n");
+	}
+	
 	return 0;
 }
